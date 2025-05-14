@@ -30,6 +30,13 @@ void Lexer::tokenize(){
 			while(is_num(lookahead())) advance();
 			advance();
 			add_token(TOK_INTEGER);
+		}else if(ch == '>'){
+			if(lookahead() == '='){
+				advance();
+				add_token(TOK_GE);
+			}else{
+				add_token(TOK_GT);
+			}
 		}
 	}
 }
