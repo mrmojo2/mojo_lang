@@ -4,25 +4,55 @@
 #include <string>
 
 enum Token_Type{
-	TOK_IDENTIFIER,
+///////////////////////////////////////////////
+//	Single char tokens
+//////////////////////////////////////////////
+	TOK_COLON,		// :
+	TOK_SEMICOLON,		// ;
+	TOK_COMMA,		// ,
+	TOK_DOT,		// .
+	TOK_MOD,		// %
+	TOK_QUES,		// ?
+	TOK_NOT,		// ~
+	TOK_GT,			// >
+	TOK_LT,			// <
+	TOK_LPAREN,		// (
+	TOK_RPAREN,		// )
+	TOK_LCURLY,		// {
+	TOK_RCURLY,		// }
+	TOK_LSQ,		// [
+	TOK_RSQ,		// ]
+	TOK_ASSIGN,		// =
+	TOK_PLUS,		// +
+	TOK_MINUS,		// -
+	TOK_STAR,		// *
+	TOK_SLASH,		// /
+///////////////////////////////////////////////
+//	Double char tokens
+//////////////////////////////////////////////
+	TOK_GE,			// >=
+	TOK_LE,			// <=
+	TOK_NE,			// ~=
+	TOK_EQ,			// ==
+	TOK_GTGT,		// >>
+	TOK_LTLT,		// <<
+
+////////////////////////////////////////////////////////
+//	Literals
+////////////////////////////////////////////////////////
+	TOK_IDENTIFIER,	
 	TOK_INTEGER,
-	TOK_SEMICOLON,
-	TOK_LPAREN,
-	TOK_RPAREN,
-	TOK_LBRACE,
-	TOK_RBRACE,
-	TOK_EQ,
-	TOK_PLUS,
-	TOK_MINUS,
-	TOK_MUL,
-	TOK_DIV
+	TOK_FLOAT,
+	TOK_STRING
 };
 
 class Token{
+public:
+	int line;
 	Token_Type type;
 	std::string lexeme;
-public:
-	Token(Token_Type,std::string);
+	
+	Token(Token_Type,std::string,int line);
 	
 	void print();	
 };

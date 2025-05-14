@@ -24,8 +24,11 @@ int main(int argc, char **argv){
 	std::string source_code = buffer.str();
 
 	//lexical analysis
-	Lexer l;
-	l.tokenize(source_code);
+	Lexer l(source_code);
+	l.tokenize();
+	for(auto token : l.tokens){
+		token.print();
+	}
 
 	return 0;
 }
