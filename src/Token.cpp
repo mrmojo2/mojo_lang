@@ -45,6 +45,6 @@ void Token::print() {
         case TOK_STRING:     type_str = "TOK_STRING"; break;
     }
 
-    std::cout << "( " << type_str << ", " << lexeme << " )" << std::endl;
+    std::cout << "( " << type_str << ", " << lexeme << ", "<< line << " )" << std::endl;
 }
 
