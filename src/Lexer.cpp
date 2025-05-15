@@ -17,7 +17,8 @@ void Lexer::tokenize(){
 		else if(ch == '\t')	continue;
 		else if(ch == ' ')	continue;
 		else if(ch == '#')
-			while(advance() != '\n'){}
+			while(peek() != '\n')
+				advance();
 		else if(ch == '+')	add_token(TOK_PLUS);
 		else if(ch == '-')	add_token(TOK_MINUS);
 		else if(ch == '*')	add_token(TOK_STAR);
