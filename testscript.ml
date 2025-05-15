@@ -6,10 +6,11 @@
 
 # Literals
 identifier1 another_var _with123
+identifier2
 
 12345
 3.1415
-"this is a string"
+'this is a string'
 "another string with symbols!@#"
 
 # Mixed expressions
