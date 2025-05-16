@@ -1,9 +1,17 @@
 #include "Lexer.h"
-
+#include "Token.h"
 #include <iostream>
 
 bool is_num(char ch){
 	return (ch >= '0' && ch <= '9');
+}
+
+bool is_alpha(char ch){
+	return ((ch >= 'a' && ch <= 'z') || (ch >='A' && ch <= 'Z'));
+}
+
+bool is_alnum(char ch){
+	return (is_num(ch) || is_alpha(ch));
 }
 
 Lexer::Lexer(std::string source):source(source){}
@@ -38,14 +46,10 @@ void Lexer::tokenize(){
 
 		//TODO:fill this for all other single char tokens
 		
-		else if(is_num(ch)){
-			while(is_num(peek())){ advance();}
-			add_token(TOK_INTEGER);
-		}else if(ch == '>'){
+		else if(ch == '>'){
 			if(match('=')) 		add_token(TOK_GE);
 			else if(match('>'))	add_token(TOK_GTGT);
-			else			add_token(TOK_GT);
-			
+			else			add_token(TOK_GT);	
 		}else if(ch == '<'){
 			if(match('='))		add_token(TOK_LE);
 			else if(match('<'))	add_token(TOK_LTLT);
@@ -56,6 +60,32 @@ void Lexer::tokenize(){
 		}else if(ch == '~'){
 			if(match('='))		add_token(TOK_NE);
 			else			add_token(TOK_NOT);
+		}else if(is_num(ch)){
+			bool float_flag = false;
+			while(1){
+				char p = peek();
+				if(p == '.') float_flag = true;
+				else if(!is_num(p)) break;
+				advance();
+			}
+			add_token(float_flag ? TOK_FLOAT:TOK_INTEGER);
+		}else if(ch == '\'' || ch == '\"'){
+			while(!match(ch))
+				advance();
+			add_token(TOK_STRING);
+		}else if(is_alpha(ch) || ch == '_'){
+			while(is_alnum(peek()) || peek() == '_'){
+				advance();
+			}
+			
+			//check if indentifier is a keyword
+			std::string id = source.substr(start_pointer,current_pointer - start_pointer );
+			auto it = keywordmap.find(id);
+			if(it == keywordmap.end())
+				add_token(TOK_IDENTIFIER);
+			else
+				add_token(it->second);
+				
 		}
 	}
 }
@@ -66,8 +96,8 @@ void Lexer::add_token(Token_Type t){
 }
 
 char Lexer::advance(){
-	char cur = source[current_pointer++];
-	return cur;
+	if(current_pointer >= source.length()) return '\0';
+	return source[current_pointer++];
 }
 
 char Lexer::peek(){
@@ -75,12 +105,12 @@ char Lexer::peek(){
 }
 
 char Lexer::lookahead(){
-	if(current_pointer + 1 < source.length())
-		return source[current_pointer + 1];
-	return '\0';	
+	if(current_pointer >= source.length()) return '\0';
+	return source[current_pointer + 1];
 }
 
 bool Lexer::match(char expected){
+	if(current_pointer >= source.length()) return false;
 	if(source[current_pointer] != expected)
 		return false;
 	current_pointer++;
