@@ -4,6 +4,29 @@
 
 Token::Token(Token_Type type,std::string lexeme, int line):type(type),lexeme(lexeme),line(line){}
 
+/////////////////////////////////////////////////////////////
+//	Hashmap of keywords and their token types
+////////////////////////////////////////////////////////////	
+
+std::unordered_map<std::string, Token_Type> keywordmap = {
+	{"if", TOK_IF},
+	{"else", TOK_ELSE},
+	{"then", TOK_THEN},
+	{"true", TOK_TRUE},
+	{"false", TOK_FALSE},
+	{"and", TOK_AND},
+	{"or", TOK_OR},
+	{"while", TOK_WHILE},
+	{"do", TOK_DO},
+	{"for", TOK_FOR},
+	{"func", TOK_FUNC},
+	{"null", TOK_NULL},
+	{"end", TOK_END},
+	{"print", TOK_PRINT},
+	{"println", TOK_PRINTLN},
+	{"ret", TOK_RET}
+};
+
 void Token::print() {
     std::string type_str = "UNKNOWN_TOKEN";
 
@@ -43,8 +66,26 @@ void Token::print() {
         case TOK_INTEGER:    type_str = "TOK_INTEGER"; break;
         case TOK_FLOAT:      type_str = "TOK_FLOAT"; break;
         case TOK_STRING:     type_str = "TOK_STRING"; break;
+
+        // Keywords
+        case TOK_IF:         type_str = "TOK_IF"; break;
+        case TOK_ELSE:       type_str = "TOK_ELSE"; break;
+        case TOK_THEN:       type_str = "TOK_THEN"; break;
+        case TOK_TRUE:       type_str = "TOK_TRUE"; break;
+        case TOK_FALSE:      type_str = "TOK_FALSE"; break;
+        case TOK_AND:        type_str = "TOK_AND"; break;
+        case TOK_OR:         type_str = "TOK_OR"; break;
+        case TOK_WHILE:      type_str = "TOK_WHILE"; break;
+        case TOK_DO:         type_str = "TOK_DO"; break;
+        case TOK_FOR:        type_str = "TOK_FOR"; break;
+        case TOK_FUNC:       type_str = "TOK_FUNC"; break;
+        case TOK_NULL:       type_str = "TOK_NULL"; break;
+        case TOK_END:        type_str = "TOK_END"; break;
+        case TOK_PRINT:      type_str = "TOK_PRINT"; break;
+        case TOK_PRINTLN:    type_str = "TOK_PRINTLN"; break;
+        case TOK_RET:        type_str = "TOK_RET"; break;
     }
 
-    std::cout << "( " << type_str << ", " << lexeme << ", "<< line << " )" << std::endl;
+    std::cout << "( " << type_str << ", " << lexeme << ", " << line << " )" << std::endl;
 }
 
