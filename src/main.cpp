@@ -5,6 +5,7 @@
 
 #include "Lexer.h"
 #include "Parser.h"
+#include "utils.h"
 
 int main(int argc, char **argv){
 	if(argc != 2){
@@ -34,8 +35,8 @@ int main(int argc, char **argv){
 	std::cout <<"Ast:"<<std::endl;
 
 	Parser p(l.tokens);
-	Expr* ast = p.parse();
-	ast->print(0);
+	p.parse();
+	p.ast->print(0);
 
 	std::cout << std::endl;
 

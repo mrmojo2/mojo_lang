@@ -3,6 +3,11 @@
 
 Parser::Parser(std::vector<Token> tokens):tokens(tokens){}
 
+//TODO: free ast
+Parser::~Parser(){
+	
+}
+
 
 Token Parser::advance(){
 	if(current < tokens.size()){
@@ -36,7 +41,7 @@ Token Parser::previous_token(){
 }
 
 Expr* Parser::parse(){
-	Expr* ast = expr();
+	ast = expr();
 	return ast;
 }
 

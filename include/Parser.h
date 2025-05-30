@@ -23,8 +23,11 @@ class Parser{
 public:
 	std::vector<Token> tokens;
 	int current = 0;
+	Expr* ast;
 
 	Parser(std::vector<Token> );
+	//TODO: free allocated memory of ast in deconstructor
+	~Parser();
 
 	Expr* parse();
 	Expr* expr();
