@@ -5,7 +5,8 @@ Parser::Parser(std::vector<Token> tokens):tokens(tokens){}
 
 //TODO: free ast
 Parser::~Parser(){
-	
+	ast->free();
+	delete ast;	
 }
 
 

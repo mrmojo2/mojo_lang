@@ -7,6 +7,7 @@ class Expr{
 public:
 	Expr() = default;
 	virtual void print(int depth) = 0;
+	virtual void free() = 0;
 	virtual ~Expr() = default;
 };
 
@@ -16,6 +17,7 @@ public:
 
 	Integer(int);
 	void print(int);
+	void free();
 };
 
 class Float : public Expr {
@@ -24,6 +26,7 @@ public:
 
 	Float(float);
 	void print(int);
+	void free();
 };
 
 class BinOp : public Expr {
@@ -33,6 +36,7 @@ public:
 
 	BinOp(Token op, Expr* left, Expr* right);
 	void print(int);
+	void free();
 };
 
 class UnOp : public Expr {
@@ -42,6 +46,7 @@ public:
 
 	UnOp(Token op, Expr* oprnd);
 	void print(int);
+	void free();
 };
 
 class GroupExpr : public Expr {
@@ -50,6 +55,7 @@ public:
 
 	GroupExpr(Expr* expr);
 	void print(int);
+	void free();
 };
 
 
