@@ -1,0 +1,10 @@
+#include "Ast.h"
+
+#include <iostream>
+
+Integer::Integer(int value) : value(value) {}
+
+void Integer::print(){
+	std::cout << "Integer ["<<value<<"]":w
+		;
+}

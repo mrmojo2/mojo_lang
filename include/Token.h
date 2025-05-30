@@ -81,6 +81,7 @@ public:
 	std::string lexeme;
 	
 	Token(Token_Type,std::string,int line);
+	Token(const Token &tok);
 	
 	void print();	
 };

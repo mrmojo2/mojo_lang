@@ -1,2 +1,2 @@
 build:
-	g++ -Wall -I ./include ./src/*.cpp -o ./bin/mlcompiler
+	g++ -Wall -g -I ./include ./src/*.cpp -o ./bin/mlcompiler

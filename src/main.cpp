@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Lexer.h"
+#include "Parser.h"
 
 int main(int argc, char **argv){
 	if(argc != 2){
@@ -29,6 +30,14 @@ int main(int argc, char **argv){
 	for(auto token : l.tokens){
 		token.print();
 	}
+
+	std::cout <<"Ast:"<<std::endl;
+
+	Parser p(l.tokens);
+	Expr* ast = p.parse();
+	ast->print();
+
+	std::cout << std::endl;
 
 	return 0;
 }

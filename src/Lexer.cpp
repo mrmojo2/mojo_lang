@@ -72,6 +72,8 @@ void Lexer::tokenize(){
 		}else if(ch == '\'' || ch == '\"'){
 			while(!match(ch))
 				advance();
+			//TODO: Check if the string is unterminated
+
 			add_token(TOK_STRING);
 		}else if(is_alpha(ch) || ch == '_'){
 			while(is_alnum(peek()) || peek() == '_'){
@@ -86,7 +88,8 @@ void Lexer::tokenize(){
 			else
 				add_token(it->second);
 				
-		}
+		}else
+			std::cerr << "[" << line << "]" << "Unexpected token\n";
 	}
 }
 

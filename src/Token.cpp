@@ -4,6 +4,12 @@
 
 Token::Token(Token_Type type,std::string lexeme, int line):type(type),lexeme(lexeme),line(line){}
 
+Token::Token(const Token &tok){
+	this->type = tok.type;
+	this->lexeme = tok.lexeme;
+	this->line = tok.line;
+}
+
 /////////////////////////////////////////////////////////////
 //	Hashmap of keywords and their token types
 ////////////////////////////////////////////////////////////	
