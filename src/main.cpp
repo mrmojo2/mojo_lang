@@ -35,7 +35,7 @@ int main(int argc, char **argv){
 
 	Parser p(l.tokens);
 	Expr* ast = p.parse();
-	ast->print();
+	ast->print(0);
 
 	std::cout << std::endl;
 
