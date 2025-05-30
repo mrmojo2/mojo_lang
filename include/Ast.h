@@ -44,6 +44,14 @@ public:
 	void print();
 };
 
+class GroupExpr : public Expr {
+public:
+	Expr* expr;
+
+	GroupExpr(Expr* expr);
+	void print();
+};
+
 
 
 #endif

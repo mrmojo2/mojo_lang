@@ -33,3 +33,11 @@ void UnOp::print(){
 	oprnd->print();
 	std::cout<<"]";
 }
+
+GroupExpr::GroupExpr(Expr* expr) : expr(expr){}
+
+void GroupExpr::print(){
+	std::cout << "GroupedExpr[";
+	expr->print();
+	std::cout <<"]";
+}

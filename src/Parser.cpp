@@ -92,6 +92,15 @@ Expr* Parser::primary(){
 	}
 
 	//TODO: implement LPAREN for grouped expressions
+	if(match(TOK_LPAREN)){
+		Expr* e = expr();
+		if(!match(TOK_RPAREN)){
+			throw std::runtime_error("Expected )");
+		}else{
+			GroupExpr* g = new GroupExpr(e);
+			return g;
+		}
+	}
 	throw std::runtime_error("Unexpected token in primary()");
 }
 
