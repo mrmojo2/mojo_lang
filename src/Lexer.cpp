@@ -1,5 +1,6 @@
 #include "Lexer.h"
 #include "Token.h"
+#include "utils.h"
 #include <iostream>
 
 bool is_num(char ch){
@@ -70,8 +71,11 @@ void Lexer::tokenize(){
 			}
 			add_token(float_flag ? TOK_FLOAT:TOK_INTEGER);
 		}else if(ch == '\'' || ch == '\"'){
-			while(!match(ch))
+			while(!match(ch)){
 				advance();
+				if(current_pointer >= source.length())
+					error("Unterminated string",line);
+			}
 			//TODO: Check if the string is unterminated
 
 			add_token(TOK_STRING);
@@ -89,7 +93,7 @@ void Lexer::tokenize(){
 				add_token(it->second);
 				
 		}else
-			std::cerr << "[" << line << "]" << "Unexpected token\n";
+			error(std::string("Unexpected token ")+ ch,line);
 	}
 }
 
@@ -118,4 +122,11 @@ bool Lexer::match(char expected){
 		return false;
 	current_pointer++;
 	return true;
+}
+
+void Lexer::error(std::string msg, int line){
+	std::cout << Colors::red;
+	std::cout << "[Line "<<line<<"] Error: "<<msg<<std::endl;
+	std::cout << Colors::white;
+	exit(1);
 }

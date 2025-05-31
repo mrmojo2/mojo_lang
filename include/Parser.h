@@ -26,9 +26,10 @@ public:
 	Expr* ast;
 
 	Parser(std::vector<Token> );
-	//TODO: free allocated memory of ast in deconstructor
 	~Parser();
 
+	void error(std::string msg, int line);
+	
 	Expr* parse();
 	Expr* expr();
 	Expr* term();

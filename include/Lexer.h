@@ -16,6 +16,7 @@ public:
 	
 	Lexer(std::string source);
 	
+	void error(std::string,int);	
 	void tokenize();
 	char advance();			//advances the current_pointer, comsumes the charecter
 	char peek();			//peek at current charecter

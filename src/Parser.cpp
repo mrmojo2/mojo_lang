@@ -1,9 +1,9 @@
 #include "Parser.h"
+#include "utils.h"
 #include <iostream>
 
 Parser::Parser(std::vector<Token> tokens):tokens(tokens){}
 
-//TODO: free ast
 Parser::~Parser(){
 	ast->free();
 	delete ast;	
@@ -97,17 +97,24 @@ Expr* Parser::primary(){
 		return f;
 	}
 
-	//TODO: implement LPAREN for grouped expressions
 	if(match(TOK_LPAREN)){
 		Expr* e = expr();
 		if(!match(TOK_RPAREN)){
-			throw std::runtime_error("Expected )");
+			//throw std::runtime_error("Expected )");
+			error("Expected )",previous_token().line);
 		}else{
 			GroupExpr* g = new GroupExpr(e);
 			return g;
 		}
 	}
-	throw std::runtime_error("Unexpected token in primary()");
+
+}
+
+void Parser::error(std::string msg, int line){
+	std::cout << Colors::red;
+	std::cout << "[Line "<<line<<"] Error: "<<msg<<std::endl;
+	std::cout << Colors::white;
+	exit(1);
 }
 
 
