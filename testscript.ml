@@ -13,6 +13,8 @@ identifier2
 'this is a string'
 "another string with symbols!@#"
 
+$
+
 # Mixed expressions
 value1 = (42 + some_var) * 3.0 - array[2] / 5 % 2;
 
