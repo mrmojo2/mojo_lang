@@ -5,6 +5,7 @@
 
 #include "Lexer.h"
 #include "Parser.h"
+#include "Interpretor.h"
 #include "utils.h"
 
 int main(int argc, char **argv){
@@ -30,15 +31,19 @@ int main(int argc, char **argv){
 	l.tokenize();
 	for(auto token : l.tokens){
 		token.print();
-	}
+	}	
 
-	std::cout <<"Ast:"<<std::endl;
-
+	//parsing the tokens
 	Parser p(l.tokens);
-	p.parse();
+	Node* ast = p.parse();
+	std::cout <<"Ast:";
 	p.ast->print(0);
-
 	std::cout << std::endl;
+	
+	//interpreting 
+	Interpretor i;
+	float value = i.interpret(ast);
+	std::cout << "Expn evaluates to: "<<value<<std::endl;
 
 	return 0;
 }
