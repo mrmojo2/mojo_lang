@@ -52,7 +52,7 @@ Expr* Parser::expr(){
 	while(match(TOK_PLUS) || match(TOK_MINUS)){
 		Token op = previous_token();
 		Expr* right = term();
-		e = new BinOp(op,e,right);
+		e = new BinOp(op,e,right,previous_token().line);
 	}
 	return e;
 }
@@ -63,7 +63,7 @@ Expr* Parser::term(){
 	while(match(TOK_SLASH) || match(TOK_STAR)){
 		Token op = previous_token();
 		Expr* right = factor();
-		e = new BinOp(op,e,right);
+		e = new BinOp(op,e,right,previous_token().line);
 	}
 	return e;
 }
@@ -78,7 +78,7 @@ Expr* Parser::unary(){
 	if(match(TOK_PLUS) || match(TOK_MINUS) || match(TOK_NOT) ){
 		Token op = previous_token();
 		Expr* operand = unary();
-		return new UnOp(op,operand);
+		return new UnOp(op,operand,previous_token().line);
 	}
 	return primary();
 }
@@ -88,12 +88,12 @@ Expr* Parser::unary(){
 Expr* Parser::primary(){
 	if(match(TOK_INTEGER)){
 		int value = std::stoi(previous_token().lexeme);
-		Integer* i = new Integer(value);
+		Integer* i = new Integer(value,previous_token().line);
 		return i;
 	}
 	if(match(TOK_FLOAT)){
 		float value = std::stof(previous_token().lexeme);
-		Float* f = new Float(value);
+		Float* f = new Float(value,previous_token().line);
 		return f;
 	}
 
@@ -103,7 +103,7 @@ Expr* Parser::primary(){
 			//throw std::runtime_error("Expected )");
 			error("Expected )",previous_token().line);
 		}else{
-			GroupExpr* g = new GroupExpr(e);
+			GroupExpr* g = new GroupExpr(e,previous_token().line);
 			return g;
 		}
 	}

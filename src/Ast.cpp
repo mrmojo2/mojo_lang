@@ -1,9 +1,11 @@
 #include "Ast.h"
 
 #include <iostream>
+Node::Node(int line):line(line){}
 
+Expr::Expr(int line):Node(line){}
 
-Integer::Integer(int value) : value(value) {}
+Integer::Integer(int value,int line) : value(value),Expr(line) {}
 
 void Integer::print(int depth){
 	std::cout << std::endl;
@@ -14,7 +16,7 @@ void Integer::print(int depth){
 void Integer::free(){}
 
 
-Float::Float(float value) : value(value) {}
+Float::Float(float value,int line) : value(value),Expr(line) {}
 
 void Float::print(int depth){
 	std::cout << std::endl;
@@ -24,7 +26,7 @@ void Float::print(int depth){
 
 void Float::free(){}
 
-BinOp::BinOp(Token op, Expr* left, Expr* right) : op(op),left(left),right(right){}
+BinOp::BinOp(Token op, Expr* left, Expr* right,int line) : op(op),left(left),right(right),Expr(line){}
 
 void BinOp::print(int depth){
 	std::cout << std::endl;
@@ -45,7 +47,7 @@ void BinOp::free(){
 	delete right;
 }
 
-UnOp::UnOp(Token op, Expr* oprnd) : op(op),oprnd(oprnd){}
+UnOp::UnOp(Token op, Expr* oprnd,int line) : op(op),oprnd(oprnd),Expr(line){}
 
 void UnOp::print(int depth){
 	std::cout << std::endl;
@@ -62,10 +64,11 @@ void UnOp::free(){
 	delete oprnd;
 }
 
-GroupExpr::GroupExpr(Expr* expr) : expr(expr){}
+GroupExpr::GroupExpr(Expr* expr,int line) : expr(expr),Expr(line){}
 
 void GroupExpr::print(int depth){
 	std::cout << std::endl;
+	for(int i=0; i<depth; ++i) std::cout << "  ";
 	std::cout << "GroupedExpr[";
 	expr->print(depth+1);
 	std::cout << std::endl;
