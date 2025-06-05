@@ -65,6 +65,24 @@ public:
 	void free();
 };
 
+class Bool : public Expr {
+public:
+	bool value;
+
+	Bool(bool value,int line);
+	void print(int depth);
+	void free();
+};
+
+class String : public Expr {
+public:
+	std::string value;
+
+	String(std::string value, int line);
+	void print(int depth);
+	void free();
+};
+
 
 
 #endif

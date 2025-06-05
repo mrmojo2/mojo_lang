@@ -42,8 +42,8 @@ int main(int argc, char **argv){
 	
 	//interpreting 
 	Interpretor i;
-	float value = i.interpret(ast);
-	std::cout << "Expn evaluates to: "<<value<<std::endl;
+	std::unique_ptr<Type> value = i.interpret(ast);
+	//std::cout << "Expn evaluates to: "<<value<<std::endl;
 
 	return 0;
 }

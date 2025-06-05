@@ -15,7 +15,7 @@
 // <term>   ::= <factor>(('*'|'/'<factor>)*
 // <factor> ::= <unary>
 // <unary>  ::= ('+'|'-'|'~')<unary> | <primary>
-// <primary>::= <integer>  | <float> | '('<expr>')'
+// <primary>::= <integer>  | <float>| <bool> |<string> |  '('<expr>')'
 //
 // /////////////////////////////////////////////////////////////
 

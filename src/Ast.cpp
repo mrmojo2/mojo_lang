@@ -80,3 +80,24 @@ void GroupExpr::free(){
 	expr->free();
 	delete expr;
 }
+
+Bool::Bool(bool value, int line) : value(value),Expr(line){}
+
+void Bool::print(int depth){
+	std::cout << std::endl;
+	for(int i=0; i<depth; ++i) std::cout << "  ";
+	std::cout << "Bool["<<value<<"]";
+}
+
+void Bool::free(){}
+
+String::String(std::string value, int line) : value(value),Expr(line){}
+
+void String::print(int depth){
+	std::cout << std::endl;
+	for(int i=0; i<depth; ++i) std::cout << "  ";
+	std::cout << "String["<<value<<"]";
+}
+ void String::free(){}
+
+

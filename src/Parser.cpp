@@ -84,27 +84,29 @@ Expr* Parser::unary(){
 }
 
 
-// <primary>::= <integer>  | <float> | '('<expr>')'
+// <primary>::= <integer>  | <float> | <bool> | <string> |'('<expr>')'
 Expr* Parser::primary(){
 	if(match(TOK_INTEGER)){
 		int value = std::stoi(previous_token().lexeme);
-		Integer* i = new Integer(value,previous_token().line);
-		return i;
-	}
-	if(match(TOK_FLOAT)){
+		return new Integer(value,previous_token().line);
+	}else if(match(TOK_FLOAT)){
 		float value = std::stof(previous_token().lexeme);
-		Float* f = new Float(value,previous_token().line);
-		return f;
-	}
-
-	if(match(TOK_LPAREN)){
+		return  new Float(value,previous_token().line);
+	}else if(match(TOK_TRUE)){
+		return new Bool(true,previous_token().line);
+	}else if(match(TOK_FALSE)){
+		return new Bool(false,previous_token().line);
+	}else if(match(TOK_STRING)){
+		std::string original = previous_token().lexeme;
+		std::string s = original.substr(1,original.length()-2);
+		return new String(s,previous_token().line);
+	}else if(match(TOK_LPAREN)){
 		Expr* e = expr();
 		if(!match(TOK_RPAREN)){
 			//throw std::runtime_error("Expected )");
 			error("Expected )",previous_token().line);
 		}else{
-			GroupExpr* g = new GroupExpr(e,previous_token().line);
-			return g;
+			return new GroupExpr(e,previous_token().line);
 		}
 	}
 
