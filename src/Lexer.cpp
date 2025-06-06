@@ -126,7 +126,7 @@ bool Lexer::match(char expected){
 
 void Lexer::error(std::string msg, int line){
 	std::cout << Colors::red;
-	std::cout << "[Line "<<line<<"] Error: "<<msg<<std::endl;
+	std::cout << "[Line "<<line<<"] Lexer Error: "<<msg<<std::endl;
 	std::cout << Colors::white;
 	exit(1);
 }

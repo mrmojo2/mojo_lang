@@ -83,7 +83,7 @@ public:
 	Token(Token_Type,std::string,int line);
 	Token(const Token &tok);
 	
-	void print();	
+	void print();
 };
 
 

@@ -11,12 +11,9 @@ Parser::~Parser(){
 
 
 Token Parser::advance(){
-	if(current < tokens.size()){
-		Token curr = tokens[current];
-		current++;
-		return curr;
-	}
-	return Token(TOK_NULL,"null",0);
+	Token token = tokens[current];
+	current++;
+	return token;
 }
 
 Token Parser::peek(){
@@ -27,18 +24,15 @@ bool Parser::match(Token_Type t){
 	if(current >= tokens.size()){
 		return false;
 	}
-	Token curr = tokens[current];
-	if(curr.type== t){
-		current++;
-		return true;
+	if(peek().type != t){
+		return false;
 	}
-	return false;
+	current++;
+	return true;
 }
 
 Token Parser::previous_token(){
-	if(current > 0)
-		return tokens[current-1];
-	return Token(TOK_NULL,"null",0);
+	return tokens[current-1];
 }
 
 Expr* Parser::parse(){
@@ -89,18 +83,23 @@ Expr* Parser::primary(){
 	if(match(TOK_INTEGER)){
 		int value = std::stoi(previous_token().lexeme);
 		return new Integer(value,previous_token().line);
-	}else if(match(TOK_FLOAT)){
+	}
+	if(match(TOK_FLOAT)){
 		float value = std::stof(previous_token().lexeme);
 		return  new Float(value,previous_token().line);
-	}else if(match(TOK_TRUE)){
+	}
+	if(match(TOK_TRUE)){
 		return new Bool(true,previous_token().line);
-	}else if(match(TOK_FALSE)){
+	}
+	if(match(TOK_FALSE)){
 		return new Bool(false,previous_token().line);
-	}else if(match(TOK_STRING)){
+	}
+	if(match(TOK_STRING)){
 		std::string original = previous_token().lexeme;
 		std::string s = original.substr(1,original.length()-2);
 		return new String(s,previous_token().line);
-	}else if(match(TOK_LPAREN)){
+	}
+	if(match(TOK_LPAREN)){
 		Expr* e = expr();
 		if(!match(TOK_RPAREN)){
 			//throw std::runtime_error("Expected )");
@@ -109,12 +108,13 @@ Expr* Parser::primary(){
 			return new GroupExpr(e,previous_token().line);
 		}
 	}
+	error("Invalid Primary  "+peek().lexeme,peek().line);
 
 }
 
 void Parser::error(std::string msg, int line){
 	std::cout << Colors::red;
-	std::cout << "[Line "<<line<<"] Error: "<<msg<<std::endl;
+	std::cout << "[Line "<<line<<"] Parsing Error: "<<msg<<std::endl;
 	std::cout << Colors::white;
 	exit(1);
 }

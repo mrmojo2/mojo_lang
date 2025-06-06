@@ -14,13 +14,12 @@ public:
 };
 
 template <typename Derived, typename Base>
-std::unique_ptr<Derived> downcast_unique_ptr(std::unique_ptr<Base>& base){
-	auto* raw_ptr = dynamic_cast<Derived*>(base.get());
-	if(raw_ptr){
-		base.release();					//give up ownnership by base to prevent two unique_ptr owning same object....i dont think this shit will work
-		return std::unique_ptr<Derived>(raw_ptr);
-	}else
-		return nullptr;
+Derived* downcast_ptr(Base* base){
+	auto* raw_ptr = dynamic_cast<Derived*>(base);
+	if(raw_ptr)	return raw_ptr;
+	else return nullptr;
 }
+
+
 
 #endif
