@@ -45,5 +45,9 @@ int main(int argc, char **argv){
 	Type* value = i.interpret(ast);
 	value->printvalue();
 	std::cout << std::endl;
+
+
+	//freeing value:
+	delete value;
 	return 0;
 }

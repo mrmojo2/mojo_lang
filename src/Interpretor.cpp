@@ -27,25 +27,49 @@ Type* Interpretor::interpret(Node* node){
 //TODO: keep this repeated code in another function
 		if(op.type == TOK_PLUS){
 			if(left_type->type == TypeName::number && right_type->type == TypeName::number){
+				
 				NumberType* left_number = dynamic_cast<NumberType*>(left_type); 
 				NumberType* right_number = dynamic_cast<NumberType*>(right_type);
 			      	if(!left_number || !right_number) error("Downcast failed",op.line);	//shouldnt ever happen...kept for good practice	
-				return new NumberType(left_number->value + right_number->value);
+				
+				float lvalue = left_number->value;
+				float rvalue = right_number->value;
+
+				delete left_number;
+				delete right_number;
+				
+				return new NumberType(lvalue + rvalue);
+			
 			}else if(left_type->type == TypeName::string && right_type->type == TypeName::string){
+				
 				StringType* left_string = dynamic_cast<StringType*>(left_type);
 				StringType* right_string = dynamic_cast<StringType*>(right_type);
 				if(!left_string || !right_string) error("Downcast failed",op.line);
-				return new StringType(left_string->value + right_string->value);
+				
+				std::string lvalue = left_string->value;
+				std::string rvalue = right_string->value;
+
+				delete left_string;
+				delete right_string;
+				
+				return new StringType(lvalue+rvalue);
+			
 			}else{
 				binop_unsupported_err(op.lexeme,left_type->type,right_type->type,op.line);
-				//TODO:node ma line no store gareko ta kam nai bhaena ta
 			}
 		}else if(op.type == TOK_MINUS){
 			if(left_type->type == TypeName::number && right_type->type == TypeName::number){
 				NumberType* left_number = dynamic_cast<NumberType*>(left_type); 
 				NumberType* right_number = dynamic_cast<NumberType*>(right_type); 
 			      	if(!left_number || !right_number) error("Downcast failed",op.line);	
-				return new NumberType(left_number->value - right_number->value);
+				
+				float lvalue = left_number->value;
+				float rvalue = right_number->value;
+
+				delete left_number;
+				delete right_number;
+				
+				return new NumberType(lvalue - rvalue);
 			}else{
 				binop_unsupported_err(op.lexeme,left_type->type,right_type->type,op.line);
 			}
@@ -54,7 +78,14 @@ Type* Interpretor::interpret(Node* node){
 				NumberType* left_number = dynamic_cast<NumberType*>(left_type); 
 				NumberType* right_number = dynamic_cast<NumberType*>(right_type); 
 			      	if(!left_number || !right_number) error("Downcast failed",op.line);	
-				return new NumberType(left_number->value * right_number->value);
+				
+				float lvalue = left_number->value;
+				float rvalue = right_number->value;
+
+				delete left_number;
+				delete right_number;
+				
+				return new NumberType(lvalue * rvalue);
 			}else{
 				binop_unsupported_err(op.lexeme,left_type->type,right_type->type,op.line);
 			}
@@ -63,7 +94,14 @@ Type* Interpretor::interpret(Node* node){
 				NumberType* left_number = dynamic_cast<NumberType*>(left_type); 
 				NumberType* right_number = dynamic_cast<NumberType*>(right_type); 
 			      	if(!left_number || !right_number) error("Downcast failed",op.line);	
-				return new NumberType(left_number->value / right_number->value);
+				
+				float lvalue = left_number->value;
+				float rvalue = right_number->value;
+
+				delete left_number;
+				delete right_number;
+				
+				return new NumberType(lvalue * rvalue);
 			}else{
 				binop_unsupported_err(op.lexeme,left_type->type,right_type->type,op.line);
 			}
@@ -85,8 +123,13 @@ Type* Interpretor::interpret(Node* node){
 		if(op.type == TOK_MINUS){
 			if(oprnd_type->type == TypeName::number){
 				NumberType* oprnd_number = dynamic_cast<NumberType*>(oprnd_type);
-			      	if(!oprnd_number) error("Downcast failed",op.line);	
-				return new NumberType(-oprnd_number->value);
+			      	if(!oprnd_number) error("Downcast failed",op.line);
+
+				float rvalue = oprnd_number->value;
+
+				delete oprnd_number;
+
+				return new NumberType(-rvalue);
 			}else{
 				unop_unsupported_err(op.lexeme,oprnd_type->type,op.line);
 			}
@@ -94,7 +137,12 @@ Type* Interpretor::interpret(Node* node){
 			if(oprnd_type->type == TypeName::number){
 				NumberType* oprnd_number = dynamic_cast<NumberType*>(oprnd_type);
 			      	if(!oprnd_number) error("Downcast failed",op.line);	
-				return new NumberType(oprnd_number->value);
+				
+				float rvalue = oprnd_number->value;
+
+				delete oprnd_number;
+
+				return new NumberType(rvalue);
 			}else{
 				unop_unsupported_err(op.lexeme,oprnd_type->type,op.line);
 			}
